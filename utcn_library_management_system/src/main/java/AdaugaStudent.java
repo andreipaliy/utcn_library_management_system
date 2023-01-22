@@ -1,3 +1,6 @@
+import Proiect.ConnectionProvider;
+import java.sql.*;
+import javax.swing.JOptionPane;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -7,12 +10,12 @@
  *
  * @author andrei
  */
-public class AdaugaCarte extends javax.swing.JFrame {
+public class AdaugaStudent extends javax.swing.JFrame {
 
     /**
      * Creates new form AdaugaCarte
      */
-    public AdaugaCarte() {
+    public AdaugaStudent() {
         initComponents();
     }
 
@@ -123,7 +126,28 @@ public class AdaugaCarte extends javax.swing.JFrame {
     }//GEN-LAST:event_jInchideStudentButtonActionPerformed
 
     private void jSalveazaStudentButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSalveazaStudentButton1ActionPerformed
-        // TODO add your handling code here:
+      
+      String codStudent=jCodStudentTextField.getText();
+      String nume = jNumeStudentTextField.getText();
+      String prenume = jPrenumeStudentTextField.getText();
+      String facultate = (String)jFacultateStudentComboBox.getSelectedItem();
+      String nivel = (String)jNivelStudentComboBox.getSelectedItem();
+      
+      try
+      {
+      Connection con=ConnectionProvider.getCon();
+      Statement st=con.createStatement();
+      st.executeUpdate("insert into student values('"+codStudent+"', '"+nume+"', '"+prenume+"','"+facultate+"','"+nivel+"')");
+      JOptionPane.showMessageDialog(null, "Student adăugat!");
+      setVisible(false);
+      new AdaugaStudent().setVisible(true);
+      }
+      catch(Exception e) 
+      {
+      JOptionPane.showMessageDialog(null, "Deja există un student cu acest cod!");
+      setVisible(false);
+      new AdaugaStudent().setVisible(true);
+      }
     }//GEN-LAST:event_jSalveazaStudentButton1ActionPerformed
 
     /**
@@ -143,20 +167,21 @@ public class AdaugaCarte extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdaugaCarte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdaugaStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdaugaCarte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdaugaStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdaugaCarte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdaugaStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdaugaCarte.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdaugaStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdaugaCarte().setVisible(true);
+                new AdaugaStudent().setVisible(true);
             }
         });
     }
